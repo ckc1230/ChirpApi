@@ -7,12 +7,9 @@ describe "Chirp API Tests" do
 	end
 
 	it "GET /chirps/:id should return 200" do
-		post "/chirps", params: {
-			chirp: {
-				content: "Yay friends!"
-			}
-		}
-		get "/chirps/1"
+		chirp = Chirp.create(content: "hello birds")
+
+		get "/chirps/#{chirp.id}"
 
 		expect(response).to have_http_status(200)
 	end
@@ -23,17 +20,32 @@ describe "Chirp API Tests" do
 				content: "Whoopee, friends!"
 			}
 		}
-
 		expect(response).to have_http_status(201)
 	end
 
-	it "DELETE /chirps/:id should return 204" do
-		post "/chirps", params: {
+	it "EDIT /chirps/:id/edit should return 200" do
+		chirp = Chirp.create(content: "hello birds")
+		get "/chirps/#{chirp.id}/edit"
+
+		expect(response).to have_http_status(200)
+	end
+
+	it "PUT /chirps/:id should return 204" do
+		chirp = Chirp.create(content: "hello birds")
+
+		put "/chirps/#{chirp.id}", params: {
 			chirp: {
-				content: "Yay friends!"
+				content: "goodbye little birds"
 			}
 		}
-		delete "/chirps/1"
+
+		expect(response).to have_http_status(204)
+	end
+
+	it "DELETE /chirps/:id should return 204" do
+		chirp = Chirp.create(content: "hello birds")
+
+		delete "/chirps/#{chirp.id}"
 
 		expect(response).to have_http_status(204)
 	end

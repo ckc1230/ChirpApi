@@ -18,6 +18,21 @@ class ChirpsController < ApplicationController
         end
     end
 
+    def edit
+        render :json => Chirp.find(params[:id]), status: 200
+    end
+
+    def update
+        chirp = Chirp.find(params[:id])
+        chirp.update_attributes(chirp_params)
+
+        if chirp
+            render :json => {success: "Chirp updated successfully"}, status: 204
+        else
+            render :json => {error: "Failed to update chirp"}, status: 400
+        end
+    end
+
 	def destroy
         chirp = Chirp.find(params[:id])
 
