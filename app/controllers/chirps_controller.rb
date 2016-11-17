@@ -7,7 +7,6 @@ class ChirpsController < ApplicationController
 		render :json => Chirp.find(params[:id]), status: 200
 	end
 	
-	
 	def create
         chirp = Chirp.create(chirp_params)
 
